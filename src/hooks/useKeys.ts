@@ -44,6 +44,5 @@ export default function useKeys(enabled: boolean) {
       window.removeEventListener("keydown", keydownHandler);
     };
   }, [keydownHandler]);
-
   return { cursorPosition, typed, clearTyped, totalTyped: typed.length };
 }

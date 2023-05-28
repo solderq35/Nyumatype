@@ -13,12 +13,12 @@ export default function useTypingTest() {
   const [state, setState] = useState<State>("start");
   const { words, updateWords } = useWords(NUMBER_OF_WORDS);
   const { timeLeft, startTimer, resetTimer } = useTimer(TIMER_SECONDS);
-  const { cursorPosition, typed, clearTyped, totalTyped } = useKeys(
-    state !== "end"
-  );
+  const { cursorPosition, typed, clearTyped, totalTyped: typedTotal } = useKeys(state !== "end");
   const [errors, setErrors] = useState(0);
   const isStart = state === "start" && cursorPosition > 0;
   const areWordsFinished = cursorPosition === words.length;
+
+  const [cumulativeTypedTotal, setCumulativeTypedTotal] = useState(0);
 
   const sumErrors = useCallback(() => {
     const wordsReached = words.substring(0, cursorPosition);
@@ -46,16 +46,9 @@ export default function useTypingTest() {
       sumErrors();
       updateWords();
       clearTyped();
+      setCumulativeTypedTotal((prevTotal) => prevTotal + typedTotal);
     }
-  }, [
-    cursorPosition,
-    words,
-    clearTyped,
-    typed,
-    areWordsFinished,
-    updateWords,
-    sumErrors,
-  ]);
+  }, [cursorPosition, words, clearTyped, typed, areWordsFinished, updateWords, sumErrors, typedTotal]);
 
   const restartGame = useCallback(() => {
     console.log("[useTypingTest/restartGame]: Restarting typing test!");
@@ -64,7 +57,10 @@ export default function useTypingTest() {
     setErrors(0);
     updateWords();
     clearTyped();
+    setCumulativeTypedTotal(0);
   }, [clearTyped, updateWords, resetTimer]);
+
+  const totalTyped = cumulativeTypedTotal + typedTotal;
 
   return { state, words, timeLeft, typed, errors, totalTyped, restartGame };
 }
