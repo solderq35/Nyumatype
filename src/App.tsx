@@ -1,23 +1,34 @@
-import { faker } from "@faker-js/faker";
+import GameOver from "./components/GameOver";
 import Reset from "./components/Reset";
 import Timer from "./components/Timer";
-import Words from "./components/Words";
-import GameOver from "./components/GameOver";
-import Container from "./components/layout/Container";
 import Typing from "./components/Typing";
-
-const words = faker.lorem.words(5);
+import Words from "./components/Words";
+import Container from "./components/layout/Container";
+import useTypingTest from "./hooks/useTypingTest";
+import { calculateAccuracy } from "./lib/utils";
 
 function App() {
+  const { state, words, timeLeft, typed, errors, restartGame, totalTyped } =
+    useTypingTest();
+
   return (
     <>
-      <Timer timeLeft={30} />
+      <Timer timeLeft={timeLeft} />
       <Container>
-        <Typing className="absolute inset-0" userInput={words} />
         <Words words={words} />
+        <Typing className="absolute inset-0" words={words} userInput={typed} />
       </Container>
-      <Reset className={"mx-auto mt-10 text-slate-500"} onRestart={() => console.log("Restart")} />
-      <GameOver className={"mt-10"} errors={10} accuracy={100} total={200} />
+      <Reset
+        onRestart={restartGame}
+        className={"mx-auto mt-10 text-slate-500"}
+      />
+      <GameOver
+        state={state}
+        className={"mt-10"}
+        errors={errors}
+        accuracy={calculateAccuracy(errors, totalTyped)}
+        total={totalTyped}
+      />
     </>
   );
 }
