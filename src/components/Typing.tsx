@@ -1,5 +1,5 @@
-import Caret from "./Caret";
 import classNames from "classnames";
+import Caret from "./Caret";
 
 interface Props {
       userInput: string;

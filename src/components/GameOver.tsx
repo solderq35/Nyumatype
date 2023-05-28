@@ -32,14 +32,14 @@ export default function GameOver({
                               transition={{ ...duration, delay: 0 }}
                               className="text-xl font-semibold"
                         >
-                              Game Over
+                              Game Over!
                         </motion.li>
                         <motion.li
                               initial={initial}
                               animate={animate}
                               transition={{ ...duration, delay: 0.5 }}
                         >
-                              Accuracy: {formatPercent(accuracy)}
+                              Typing Accuracy: {formatPercent(accuracy)}
                         </motion.li>
                         <motion.li
                               initial={initial}
@@ -47,14 +47,14 @@ export default function GameOver({
                               transition={{ ...duration, delay: 1 }}
                               className="text-red-500"
                         >
-                              Errors: {errors}
+                              Typing Errors: {errors}
                         </motion.li>
                         <motion.li
                               initial={initial}
                               animate={animate}
                               transition={{ ...duration, delay: 1.5 }}
                         >
-                              Typed: {total}
+                              Characters Typed: {total}
                         </motion.li>
                   </ul>
             );

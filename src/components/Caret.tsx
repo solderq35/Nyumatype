@@ -4,11 +4,11 @@ export default function Caret() {
       return (
             <motion.div
                   aria-hidden={true}
-                  className="inline-block w-1 h-5 ml-1 bg-primary-400"
+                  className="inline-block bg-primary-500 w-0.5 h-5 transform -translate-y-[-2px]"
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 0 }}
                   exit={{ opacity: 1 }}
-                  transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+                  transition={{ repeat: Infinity, duration: 0.8, ease: "easeInOut" }}
             />
       );
 }
